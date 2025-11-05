@@ -4,7 +4,7 @@ from playwright.sync_api import sync_playwright, Cookie, TimeoutError as Playwri
 
 def add_server_time(server_url="https://hub.weirdhost.xyz/server/a8fddbc5"):
     """
-    尝试登录 hub.weirdhost.xyz 并点击 "시간 추가" 按钮。
+    尝试登录 game.wavehost.eu 并点击 "DODAJ 6 GODZIN" 按钮。
     优先使用 REMEMBER_WEB_COOKIE 进行会话登录，如果不存在则回退到邮箱密码登录。
     此函数设计为每次GitHub Actions运行时执行一次。
     """
@@ -32,7 +32,7 @@ def add_server_time(server_url="https://hub.weirdhost.xyz/server/a8fddbc5"):
                 session_cookie = {
                     'name': 'remember_web_59ba36addc2b2f9401580f014c7f58ea4e30989d',
                     'value': remember_web_cookie,
-                    'domain': 'hub.weirdhost.xyz',  # 已更新为新的域名
+                    'domain': 'game.wavehost.eu',  # 已更新为新的域名
                     'path': '/',
                     'expires': int(time.time()) + 3600 * 24 * 365, # 设置一个较长的过期时间
                     'httpOnly': True,
@@ -106,8 +106,8 @@ def add_server_time(server_url="https://hub.weirdhost.xyz/server/a8fddbc5"):
                     browser.close()
                     return False
 
-            # --- 核心操作：查找并点击 "시간 추가" 按钮 ---
-            add_button_selector = 'button:has-text("시간 추가")' # 已更新为新的按钮文本
+            # --- 核心操作：查找并点击 "DODAJ 6 GODZIN" 按钮 ---
+            add_button_selector = 'button:has-text("DODAJ 6 GODZIN")' # 已更新为新的按钮文本
             print(f"正在查找并等待 '{add_button_selector}' 按钮...")
 
             try:
@@ -115,13 +115,13 @@ def add_server_time(server_url="https://hub.weirdhost.xyz/server/a8fddbc5"):
                 add_button = page.locator(add_button_selector)
                 add_button.wait_for(state='visible', timeout=30000)
                 add_button.click()
-                print("成功点击 '시간 추가' 按钮。")
+                print("成功点击 'DODAJ 6 GODZIN' 按钮。")
                 time.sleep(5) # 等待5秒，确保操作在服务器端生效
                 print("任务完成。")
                 browser.close()
                 return True
             except PlaywrightTimeoutError:
-                print(f"错误: 在30秒内未找到或 '시간 추가' 按钮不可见/不可点击。")
+                print(f"错误: 在30秒内未找到或 'DODAJ 6 GODZIN' 按钮不可见/不可点击。")
                 page.screenshot(path="add_6h_button_not_found.png")
                 browser.close()
                 return False
